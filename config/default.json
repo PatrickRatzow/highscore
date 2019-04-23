@@ -6,5 +6,6 @@
     "user": "admin",
     "password": "",
     "db": "highscore"
-  }
+  },
+  "secretKey": "ndYo3sntLCPNFyVqYcO5nzeKcc53IX8jFOrVl3Y8FD43QLEjJQFr1RskTIfF"
 }

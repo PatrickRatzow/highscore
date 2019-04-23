@@ -5,10 +5,20 @@ import r from "rethinkdb"
 import bodyParser from "body-parser"
 
 const port = config.get("port")
+const secretKeyCfg = config.get("secretKey")
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.post("/", async (req, res) => {
+  const secretKey = req.body.secret_key
+  if (!secretKey || secretKey == undefined || secretKey != secretKeyCfg) {
+    res.json({
+      error: true
+    })
+
+    return
+  }
+
   const name = req.body.name
   const hs = req.body.hs
   if (!name || !hs || name == undefined || hs == undefined) { 
