@@ -2,15 +2,13 @@ import express from "express"
 import config from "config"
 import db from "./database"
 import r from "rethinkdb"
-import bodyParser from "body-parser"
 
 const port = config.get("port")
 const secretKeyCfg = config.get("secretKey")
 const app = express()
-app.use(bodyParser.urlencoded({ extended: false }))
 
-app.post("/", async (req, res) => {
-  const secretKey = req.body.secret_key
+app.get("/upload/:secretKey/:name/:hs", async (req, res) => {
+  const secretKey = req.params.secretKey
   if (!secretKey || secretKey == undefined || secretKey != secretKeyCfg) {
     res.json({
       error: true
@@ -19,8 +17,8 @@ app.post("/", async (req, res) => {
     return
   }
 
-  const name = req.body.name
-  const hs = req.body.hs
+  const name = req.params.name
+  const hs = req.params.hs
   if (!name || !hs || name == undefined || hs == undefined) { 
     res.json({
       error: true
